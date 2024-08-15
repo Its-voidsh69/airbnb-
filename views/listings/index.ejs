@@ -1,0 +1,30 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="container my-4">
+        <h3 class="mb-4">All Listings</h3>
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+            <% for(let listing of allChat){ %>
+                <div class="col">
+                    <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+                        <div class="card h-100 card-hover">
+                            <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title %> image" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title"><%= listing.title %></h5>
+                                <p class="card-text flex-grow-1"><%= listing.description.trim() %></p>
+                                <p class="card-text"><strong>Location:</strong> <%= listing.location %>, <%= listing.country %></p>
+                                <p class="card-text"><strong>Price:</strong> &#8377;<%= listing.price %> /night</p>
+                                <span class="btn btn-primary mt-3 align-self-start">View Details</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <% } %> 
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+<body>
+    <div class="container my-4">
+        <h3>Edit Your Listing</h3>
+        <form id="editListingForm" method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" placeholder="Enter title" name="title" class="form-control" id="title" value="<%= listing.title %>" required>
+                <div class="invalid-feedback">Please enter a valid title.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea placeholder="Enter description" name="description" class="form-control" id="description" required><%= listing.description %></textarea>
+                <div class="invalid-feedback">Please enter a description.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="filename" class="form-label">Image Filename</label>
+                <input type="text" placeholder="Enter filename" name="filename" class="form-control" id="filename" value="<%= listing.image.filename %>" required>
+                <div class="invalid-feedback">Please enter a filename.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="imageUrl" class="form-label">Image URL</label>
+                <input type="text" placeholder="Enter image URL/link" name="imageUrl" class="form-control" id="imageUrl" value="<%= listing.image.url %>" required>
+                <div class="invalid-feedback">Please enter an image URL/link.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" placeholder="Enter location" name="location" class="form-control" id="location" value="<%= listing.location %>" required>
+                <div class="invalid-feedback">Please enter a location.</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input  placeholder="Enter price" name="price" class="form-control" id="price" value="<%= listing.price %>" required>
+                    <div class="invalid-feedback">Please enter a price.</div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" placeholder="Enter country" name="country" class="form-control" id="country" value="<%= listing.country %>" required>
+                    <div class="invalid-feedback">Please enter a country.</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-danger">Edit</button>
+        </form>
+        <div id="formFeedback" class="mt-3"></div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var form = document.getElementById('editListingForm');
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        document.getElementById('formFeedback').innerHTML = '<div class="alert alert-danger">Please fill out all required fields correctly.</div>';
+                    } else {
+                        document.getElementById('formFeedback').innerHTML = '<div class="alert alert-success">Form submitted successfully!</div>';
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            }, false);
+        })();
+    </script>
+</body>
+</html>

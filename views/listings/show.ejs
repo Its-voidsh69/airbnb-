@@ -1,0 +1,93 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <img src="<%= data.image.url %>" alt="listing_image" class="card-img-top img-fluid"
+                    style="width: 50%; height: auto; margin: 0 auto; display: block;">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <%= data.title %>
+                    </h3>
+                    <p class="card-text">
+                        <%= data.description %>
+                    </p>
+                    <p class="card-text">
+                        <strong>Price:</strong> ₹<%= data.price.toLocaleString("en-IN") %> /night <br>
+                        <strong>Location:</strong> <%= data.location %> <br>
+                        <strong>Country:</strong> <%= data.country %> <br>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mb-4">
+                <a href="/listings/<%= data._id %>/edit" class="btn btn-primary">Edit</a>
+                <form method="POST" action="/listings/<%= data._id %>?_method=DELETE">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+            <hr>
+            <div class="col-md-12">
+                <h4 class="mb-3">Leave A Review</h4>
+                <form action="/listings/<%= data._id %>/review" method="POST" class="bg-light p-4 rounded shadow-sm needs-validation" novalidate>
+                    <div class="form-group mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" name="review[name]" id="name" class="form-control" required placeholder="Your Name">
+                        <div class="invalid-feedback">
+                            Please enter your name.
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="rating" class="form-label">Rating</label>
+                        <input type="range" class="form-range" min="1" max="5" id="rating" name="review[rating]">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea name="review[comment]" id="comment" class="form-control" rows="4"
+                        required placeholder="Drop Your Comment For Review Here!"></textarea>
+                        <div class="invalid-feedback">
+                            Please add some comment for review
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+            <hr>
+            <h4>All Reviews</h4>
+            <ul class="list-group mb-4">
+                <% for(review of data.reviews) { %>
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong><%= review.name %></strong><br>
+                            <span><%= review.comment %></span>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">Rating: <%= review.rating %></span>
+                    </div>
+                    <form method="POST" action="/listings/<%= data._id %>/reviews/<%= review._id %>?_method=DELETE" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete Review</button>
+                    </form>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .list-group-item {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        margin-bottom: 0.5rem;
+        padding: 1rem;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    }
+    .list-group-item:hover {
+        background-color: #e9ecef;
+    }
+    .badge-primary {
+        background-color: #007bff;
+    }
+</style>
+
+<script src="/js/script.js"></script>
